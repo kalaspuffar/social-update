@@ -3,6 +3,7 @@ require_once("config.php");
 require_once($WORDPRESS_PATH . 'wp-includes/formatting.php');
 require_once($WORDPRESS_PATH . 'wp-includes/post.php');
 require_once($WORDPRESS_PATH . 'wp-includes/user.php');
+require_once($WORDPRESS_PATH . 'wp-includes/functions.php');
 
 @mkdir($DATA_DIR);
 
