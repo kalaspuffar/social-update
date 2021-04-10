@@ -36,7 +36,7 @@ $my_post = array(
 $post_id = wp_insert_post( $my_post );
 
 $filename = $youtube_id . '.png';
-$upload_file = wp_upload_bits($filename, null, file_get_contents($youtube_data->youtube_url));
+$upload_file = wp_upload_bits($filename, null, file_get_contents($youtube_data->thumbnail));
 if (!$upload_file['error']) {
     $wp_filetype = wp_check_filetype($filename, null );
     $attachment = array(
