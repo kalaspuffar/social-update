@@ -14,21 +14,20 @@ if (file_exists("dev_latest.txt")) {
     }    
 }
 
-$youtube_data = json_decode(file_get_contents("youtube_fetch_latest.txt"));
+$youtube_data = json_decode(file_get_contents("youtube_content.json"));
 
 $data = array();
 $data["article"]["body_markdown"] = 
     "---\n" .
-    "title: " . $youtube_data["title"] . "\n" .
+    "title: " . $youtube_data->title . "\n" .
     "published: false\n" .
-    "description: " . $youtube_data["description"] . "\n" .
+    "description: " . $youtube_data->description . "\n" .
     "tags:\n" .
-    "cover_image: " . $youtube_data["thumbnail"] . "\n" .
+    "cover_image: " . $youtube_data->thumbnail . "\n" .
     "---\n\n" .
-    "{% youtube " . $youtube_id . " %}\n\n" . $youtube_data["description"];
+    "{% youtube " . $youtube_id . " %}\n\n" . $youtube_data->description;
 
 $postdata = json_encode($data);
-
 $opts = array('http' =>
     array(
         'method'  => "POST",
@@ -41,4 +40,3 @@ $context = stream_context_create($opts);
 file_get_contents('https://dev.to/api/articles', false, $context);
 
 file_put_contents("dev_latest.txt", $youtube_id);
-
