@@ -23,7 +23,7 @@ if (file_exists($WORDPRESS_STATUS_FILE)) {
 
 $youtube_data = json_decode(file_get_contents($YOUTUBE_CONTENT_FILE));
 
-$content = "[youtube " . $youtube_data->youtube_url . "&w=480&h=270]\n\n" . $youtube_data->description;
+$content = "[youtube " . $youtube_data->youtube_url . "]\n\n" . $youtube_data->description;
 $my_post = array(
     'post_title'    => wp_strip_all_tags( $youtube_data->title ),
     'post_content'  => $content,
