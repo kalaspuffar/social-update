@@ -5,8 +5,9 @@ if (!file_exists("youtube_fetch_latest.txt") || !file_exists("youtube_content.js
     die("No data");
 }
 
+$youtube_id = file_get_contents("youtube_fetch_latest.txt");
+
 if (file_exists("dev_latest.txt")) {
-    $youtube_id = file_get_contents("youtube_fetch_latest.txt");
     $dev_id = file_get_contents("dev_latest.txt");
     if (trim($dev_id) == trim($youtube_id)) {
         die("Done");
