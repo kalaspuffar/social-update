@@ -1,10 +1,10 @@
 <?php
 require_once("config.php");
-require_once($WORDPRESS_PATH . 'wp-config.php');
-require_once($WORDPRESS_PATH . 'wp-includes/formatting.php');
-require_once($WORDPRESS_PATH . 'wp-includes/post.php');
-require_once($WORDPRESS_PATH . 'wp-includes/user.php');
-require_once($WORDPRESS_PATH . 'wp-includes/functions.php');
+require_once($WORDPRESS_PATH . '/wp-config.php');
+require_once($WORDPRESS_PATH . '/wp-includes/formatting.php');
+require_once($WORDPRESS_PATH . '/wp-includes/post.php');
+require_once($WORDPRESS_PATH . '/wp-includes/user.php');
+require_once($WORDPRESS_PATH . '/wp-includes/functions.php');
 
 @mkdir($DATA_DIR);
 
@@ -50,7 +50,7 @@ if (!$upload_file['error']) {
     $attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $post_id );
 
     if (!is_wp_error($attachment_id)) {
-        require_once(ABSPATH . 'wp-admin/includes/image.php');
+        require_once($WORDPRESS_PATH . '/wp-admin/includes/image.php');
         $attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
         wp_update_attachment_metadata( $attachment_id,  $attachment_data );
     }
