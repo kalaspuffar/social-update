@@ -1,7 +1,7 @@
 <?php
 require_once("config.php");
 
-@mkdir("data");
+@mkdir($DATA_DIR);
 
 $res = file_get_contents("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&maxResults=1&order=date&type=video&key=${YOUTUBE_API_KEY}");
 
