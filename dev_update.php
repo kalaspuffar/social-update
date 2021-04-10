@@ -1,4 +1,5 @@
 <?php
+require_once("config.php");
 
 if (!file_exists("youtube_fetch_latest.txt") || !file_exists("youtube_content.json")) {
     die("No data");
