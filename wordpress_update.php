@@ -56,6 +56,8 @@ if (!$upload_file['error']) {
     }
 
     set_post_thumbnail( $post_id, $attachment_id );
+} else {
+    die($upload_file['error']);
 }
 
 file_put_contents($WORDPRESS_STATUS_FILE, $youtube_id);
