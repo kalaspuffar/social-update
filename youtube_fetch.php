@@ -1,6 +1,8 @@
 <?php
 require_once("config.php");
 
+@mkdir("data");
+
 $res = file_get_contents("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&maxResults=1&order=date&type=video&key=${YOUTUBE_API_KEY}");
 
 $json = json_decode($res);
@@ -22,12 +24,12 @@ $data = array(
     "youtube_url" => "https://www.youtube.com/watch?v=${id}",
 );
 
-file_put_contents("youtube_content.json", json_encode($data));
+file_put_contents($YOUTUBE_CONTENT_FILE, json_encode($data));
 
-if (file_exists("youtube_fetch_latest.txt")) {
-    $last_id = file_get_contents("youtube_fetch_latest.txt");
+if (file_exists($YOUTUBE_STATUS_FILE)) {
+    $last_id = file_get_contents($YOUTUBE_STATUS_FILE);
     if (trim($last_id) == trim($id)) {
         die("Done");
     }    
 }
-file_put_contents("youtube_fetch_latest.txt", $id);
+file_put_contents($YOUTUBE_STATUS_FILE, $id);

@@ -1,20 +1,22 @@
 <?php
 require_once("config.php");
 
-if (!file_exists("youtube_fetch_latest.txt") || !file_exists("youtube_content.json")) {
+@mkdir($DATA_DIR);
+
+if (!file_exists($YOUTUBE_STATUS_FILE) || !file_exists($YOUTUBE_CONTENT_FILE)) {
     die("No data");
 }
 
-$youtube_id = file_get_contents("youtube_fetch_latest.txt");
+$youtube_id = file_get_contents($YOUTUBE_STATUS_FILE);
 
-if (file_exists("dev_latest.txt")) {
-    $dev_id = file_get_contents("dev_latest.txt");
+if (file_exists($DEV_STATUS_FILE)) {
+    $dev_id = file_get_contents($DEV_STATUS_FILE);
     if (trim($dev_id) == trim($youtube_id)) {
         die("Done");
     }    
 }
 
-$youtube_data = json_decode(file_get_contents("youtube_content.json"));
+$youtube_data = json_decode(file_get_contents($YOUTUBE_CONTENT_FILE));
 
 $data = array();
 $data["article"]["body_markdown"] = 
@@ -39,4 +41,4 @@ $opts = array('http' =>
 $context = stream_context_create($opts);
 file_get_contents('https://dev.to/api/articles', false, $context);
 
-file_put_contents("dev_latest.txt", $youtube_id);
+file_put_contents($DEV_STATUS_FILE, $youtube_id);
