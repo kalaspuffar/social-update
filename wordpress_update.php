@@ -28,8 +28,8 @@ $my_post = array(
     'post_title'    => wp_strip_all_tags( $youtube_data->title ),
     'post_content'  => $content,
     'post_status'   => 'publish',
-    'post_author'   => 1,
-    'post_category' => array(2)
+    'post_author'   => $WORDPRESS_POST_AS_USER_ID,
+    'post_category' => $WORDPRESS_POST_CATEGORY_ID
 );
 
 // Insert the post into the database

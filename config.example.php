@@ -7,3 +7,6 @@ $YOUTUBE_STATUS_FILE = $DATA_DIR . '/youtube_fetch_latest.txt';
 $YOUTUBE_CONTENT_FILE = $DATA_DIR . '/youtube_content.json';
 $DEV_STATUS_FILE = $DATA_DIR . '/dev_latest.txt';
 $WORDPRESS_PATH = 'path-to-your-wordpress-installation';
+$WORDPRESS_STATUS_FILE = $DATA_DIR . '/wordpress_latest.txt';
+$WORDPRESS_POST_CATEGORY_ID = array(2);
+$WORDPRESS_POST_AS_USER_ID = 1;
