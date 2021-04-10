@@ -1,7 +1,7 @@
 <?php
 require_once("config.php");
 
-$res = file_get_contents("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UCnG-TN23lswO6QbvWhMtxpA&maxResults=1&order=date&type=video&key=" . $YOUTUBE_API_KEY);
+$res = file_get_contents("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&maxResults=1&order=date&type=video&key=${YOUTUBE_API_KEY}");
 
 $json = json_decode($res);
 $videoId = $json->items[0]->id->videoId;
