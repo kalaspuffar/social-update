@@ -1,37 +1,29 @@
 <?php
-require_once("config.php");
 
-$res = file_get_contents("https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&maxResults=1&order=date&type=video&key=${YOUTUBE_API_KEY}");
+if (!file_exists("youtube_fetch_latest.txt") || !file_exists("youtube_content.json")) {
+    die("No data");
+}
 
-$json = json_decode($res);
-$videoId = $json->items[0]->id->videoId;
-
-$res = file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $videoId . "&key=" . $YOUTUBE_API_KEY);
-
-$json = json_decode($res);
-
-$snippet = $json->items[0]->snippet;
-
-$id = $json->items[0]->id;
-$desc = explode("\n\n", $snippet->description)[0];
-
-if (file_exists("latest.txt")) {
-    $lastID = file_get_contents("latest.txt");
-    if (trim($lastID) == trim($id)) {
+if (file_exists("dev_latest.txt")) {
+    $youtube_id = file_get_contents("youtube_fetch_latest.txt");
+    $dev_id = file_get_contents("dev_latest.txt");
+    if (trim($dev_id) == trim($youtube_id)) {
         die("Done");
     }    
 }
 
+$youtube_data = json_decode(file_get_contents("youtube_fetch_latest.txt"));
+
 $data = array();
 $data["article"]["body_markdown"] = 
     "---\n" .
-    "title: " . $snippet->title . "\n" .
+    "title: " . $youtube_data["title"] . "\n" .
     "published: false\n" .
-    "description: " . $desc . "\n" .
+    "description: " . $youtube_data["description"] . "\n" .
     "tags:\n" .
-    "cover_image: " . $snippet->thumbnails->maxres->url . "\n" .
+    "cover_image: " . $youtube_data["thumbnail"] . "\n" .
     "---\n\n" .
-    "{% youtube " . $id . " %}\n\n" . $desc;
+    "{% youtube " . $youtube_id . " %}\n\n" . $youtube_data["description"];
 
 $postdata = json_encode($data);
 
@@ -46,5 +38,5 @@ $opts = array('http' =>
 $context = stream_context_create($opts);
 file_get_contents('https://dev.to/api/articles', false, $context);
 
-file_put_contents("latest.txt", $id);
+file_put_contents("dev_latest.txt", $youtube_id);
 
