@@ -19,6 +19,9 @@ if (file_exists($DEV_STATUS_FILE)) {
 $youtube_data = json_decode(file_get_contents($YOUTUBE_CONTENT_FILE));
 
 $data = array();
+$data["article"]["title"] = $youtube_data->title;
+$data["article"]["published"] = false;
+$data["article"]["tags"] = [];
 $data["article"]["body_markdown"] = 
     "---\n" .
     "title: " . $youtube_data->title . "\n" .
@@ -33,7 +36,7 @@ $postdata = json_encode($data);
 $opts = array('http' =>
     array(
         'method'  => "POST",
-        'header'  => "Content-Type: application/json\r\napi-key: " . $DEV_API_KEY,
+        'header'  => "Content-Type: application/json\r\nUser-Agent: danielpersson.dev auto publisher\r\napi-key: " . $DEV_API_KEY,
         'content' => $postdata
     )
 );

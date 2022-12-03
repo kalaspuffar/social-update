@@ -1,5 +1,8 @@
 <?php
 require_once("config.php");
+define( 'ABSPATH', $WORDPRESS_PATH . '/' );
+define( 'WPINC', 'wp-includes' );
+define( 'WP_CONTENT_DIR', ABSPATH . 'wp-content' );
 require_once($WORDPRESS_PATH . '/wp-config.php');
 require_once($WORDPRESS_PATH . '/wp-includes/formatting.php');
 require_once($WORDPRESS_PATH . '/wp-includes/post.php');

@@ -8,11 +8,17 @@ $res = file_get_contents("https://youtube.googleapis.com/youtube/v3/search?part=
 $json = json_decode($res);
 $video_id = $json->items[0]->id->videoId;
 
-$res = file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" . $video_id . "&key=" . $YOUTUBE_API_KEY);
+$res = file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=" . $video_id . "&key=" . $YOUTUBE_API_KEY);
 
 $json = json_decode($res);
 
 $snippet = $json->items[0]->snippet;
+$duration = $json->items[0]->contentDetails->duration;
+
+$d = new DateInterval($duration);
+if ($d->h == 0 && $d->i == 0) {
+  die();
+}
 
 $id = $json->items[0]->id;
 $desc = explode("\n\n", $snippet->description)[0];
@@ -20,7 +26,7 @@ $desc = explode("\n\n", $snippet->description)[0];
 $data = array(
     "title" => $snippet->title,
     "description" => $desc,
-    "thumbnail" => $snippet->thumbnails->maxres->url,
+    "thumbnail" => "https://i.ytimg.com/vi/${id}/maxresdefault.jpg",
     "youtube_url" => "https://www.youtube.com/watch?v=${id}",
 );
 
